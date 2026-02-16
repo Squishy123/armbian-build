@@ -26,6 +26,7 @@ function ayn-odin2_is_userspace_supported() {
 	[[ "${RELEASE}" == "trixie" ]] && return 0
 	[[ "${RELEASE}" == "noble" ]] && return 0
 	[[ "${RELEASE}" == "plucky" ]] && return 0
+	[[ "${RELEASE}" == "questing" ]] && return 0
 	return 1
 }
 
@@ -71,20 +72,20 @@ function post_family_tweaks__ayn-odin2_enable_services() {
 		return 0
 	fi
 
-	if [[ "${RELEASE}" == "jammy" ]] || [[ "${RELEASE}" == "noble" ]] || [[ "${RELEASE}" == "plucky" ]]; then
-		display_alert "Adding Mesa PPA For Ubuntu ${BOARD}" "warn"
-		do_with_retries 3 chroot_sdcard add-apt-repository ppa:kisak/kisak-mesa --yes
+	#if [[ "${RELEASE}" == "jammy" ]] || [[ "${RELEASE}" == "noble" ]] || [[ "${RELEASE}" == "plucky" ]] || [[ "${RELEASE}" == "questing" ]]; then
+	#	display_alert "Adding Mesa PPA For Ubuntu ${BOARD}" "warn"
+	#	do_with_retries 3 chroot_sdcard add-apt-repository ppa:kisak/kisak-mesa --yes
 
-		do_with_retries 3 chroot_sdcard_apt_get_update
-		display_alert "Installing Mesa Vulkan Drivers"
-		do_with_retries 3 chroot_sdcard_apt_get_install libgl1-mesa-dri mesa-vulkan-drivers vulkan-tools
-	fi
+	#	do_with_retries 3 chroot_sdcard_apt_get_update
+	#	display_alert "Installing Mesa Vulkan Drivers"
+	#	do_with_retries 3 chroot_sdcard_apt_get_install libgl1-mesa-dri mesa-vulkan-drivers vulkan-tools
+	#fi
 
-	if [[ "${RELEASE}" == "trixie" ]]; then
-		do_with_retries 3 chroot_sdcard_apt_get_update
-		display_alert "Installing Mesa Vulkan Drivers"
-		do_with_retries 3 chroot_sdcard_apt_get_install libgl1-mesa-dri mesa-vulkan-drivers vulkan-tools
-	fi
+	#if [[ "${RELEASE}" == "trixie" ]]; then
+	#	do_with_retries 3 chroot_sdcard_apt_get_update
+	#	display_alert "Installing Mesa Vulkan Drivers"
+	#	do_with_retries 3 chroot_sdcard_apt_get_install libgl1-mesa-dri mesa-vulkan-drivers vulkan-tools
+	#fi
 
 	# We need unudhcpd from armbian repo, so enable it
 	mv "${SDCARD}"/etc/apt/sources.list.d/armbian.sources.disabled "${SDCARD}"/etc/apt/sources.list.d/armbian.sources
